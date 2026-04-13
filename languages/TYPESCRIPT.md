@@ -419,3 +419,43 @@ codeHere();
 ```
 
 Categories: `Security:`, `Performance:`, `Optimization:`
+
+---
+
+## Formatter and Linter
+
+### TypeScript/JavaScript-Specific Tools
+
+**Formatter**: `prettier` (or `dprint`)
+```bash
+# Format specific files with prettier
+npx prettier --write src/main.ts src/utils.ts
+
+# Or format the entire project
+npx prettier --write .
+
+# Using dprint
+npx dprint fmt src/main.ts
+```
+
+**Linter**: `eslint`
+```bash
+# Run eslint with auto-fix first
+npx eslint . --fix
+
+# Run eslint again to catch remaining issues
+npx eslint .
+
+# Treat warnings as errors
+npx eslint . --max-warnings 0
+```
+
+### Workflow After Editing TypeScript Files
+
+1. **Edit**: Make your changes
+2. **Format**: `npx prettier --write <files>`
+3. **Auto-fix**: `npx eslint . --fix`
+4. **Check**: `npx eslint . --max-warnings 0` - fix any remaining issues manually
+5. **Commit**: Only commit when eslint reports clean
+
+**Note**: Always fix all eslint warnings. If a warning shouldn't exist, disable it in `.eslintrc` with a comment explaining why.

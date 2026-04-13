@@ -130,13 +130,39 @@ fn process_order(order: Order) {
 
 ## 🔧 Tool Integration
 
+### Formatters
+
 This style guide **complements** automated formatters:
 
-- **Always use**: `rustfmt`, `prettier`, `black`, `dartfmt`
+- **Always use**: `rustfmt`, `prettier`, `black`, `dartfmt`, `dprint`
 - **This guide covers**: Blank line placement, grouping, early return patterns, comment positioning
 - **Formatters cover**: Indentation, trailing commas, spacing around operators, line length
 
 Never fight the formatter on mechanical details. This guide addresses aesthetic choices that formatters don't make.
+
+### Always Run the Formatter After Editing
+
+**Rule**: After editing any code file or markdown file, always run the project's formatter.
+
+- **dprint** - Universal formatter for many languages
+- **prettier** - JavaScript, TypeScript, CSS, HTML, Markdown
+- **rustfmt** - Rust
+- **black** - Python
+- **dartfmt** - Dart/Flutter
+
+Run the formatter on the specific files you edited. Auto-formatted code is essential for consistent codebases.
+
+### Always Run the Linter and Fix All Issues
+
+**Rule**: Unless the linter is very slow, run the project's linter after editing files.
+
+**Warnings Are Errors**: Treat all linter warnings as errors. If a warning shouldn't exist, remove it from the lint settings.
+
+**Workflow**:
+1. Edit files
+2. Run formatter
+3. Run linter with auto-fix first
+4. Run linter again and fix remaining issues manually
 
 ## 📋 Summary
 
@@ -148,6 +174,8 @@ Never fight the formatter on mechanical details. This guide addresses aesthetic 
 | **Nesting** | Avoid more than 2-3 levels deep | When language idioms require it |
 | **Comments** | Explain why, not what | Security and performance require explanation of what |
 | **Extraction** | Break complex logic into small functions | When it hurts performance |
+| **Formatting** | Run formatter after every edit | N/A - Always run it |
+| **Linting** | Run linter after edits, fix all issues | Only skip if linter is very slow |
 
 ## 📄 License
 

@@ -418,3 +418,43 @@ codeHere();
 ```
 
 Categories: `Security:`, `Performance:`, `Optimization:`
+
+---
+
+## Formatter and Linter
+
+### Dart/Flutter-Specific Tools
+
+**Formatter**: `dart format` (built-in)
+```bash
+# Format specific files
+dart format lib/main.dart lib/utils.dart
+
+# Or format the entire project
+dart format .
+
+# Using flutter
+flutter format lib/
+```
+
+**Linter**: `dart analyze` (built-in)
+```bash
+# Run analyzer (no auto-fix, but shows issues)
+dart analyze
+
+# Using flutter
+flutter analyze
+
+# Treat warnings as errors
+dart analyze --fatal-warnings
+```
+
+### Workflow After Editing Dart Files
+
+1. **Edit**: Make your changes
+2. **Format**: `dart format <files>` or `flutter format`
+3. **Analyze**: `dart analyze` or `flutter analyze`
+4. **Fix**: Address all warnings and errors manually (Dart analyzer has limited auto-fix)
+5. **Commit**: Only commit when analyzer reports clean
+
+**Note**: Always fix all analyzer warnings. Configure lint rules in `analysis_options.yaml`. If a rule shouldn't apply, disable it with a comment explaining why.

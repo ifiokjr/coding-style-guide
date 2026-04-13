@@ -272,6 +272,51 @@ This style guide **complements**, not replaces, automated formatters:
 
 Never fight the formatter on mechanical details. This guide addresses aesthetic choices that formatters don't make.
 
+### Always Run the Formatter After Editing
+
+**Rule**: After editing any code file or markdown file, always run the project's formatter.
+
+Different projects use different formatters:
+- **dprint** - Universal formatter for many languages
+- **prettier** - JavaScript, TypeScript, CSS, HTML, Markdown
+- **rustfmt** - Rust
+- **black** - Python
+- **dartfmt** - Dart/Flutter
+
+Run the formatter on the specific files you edited. Auto-formatted code is essential for consistent codebases.
+
+### Always Run the Linter and Fix All Issues
+
+**Rule**: Unless the linter is very slow, run the project's linter after editing files.
+
+- Run on changed files (for per-file support)
+- Or run on the whole project (if per-file isn't supported)
+
+**Warnings Are Errors**: Treat all linter warnings as errors.
+- If a warning shouldn't exist, remove it from the lint settings
+- Don't leave warnings in the codebase
+
+**Auto-fix What You Can**:
+- Formatters auto-correct their own formatting issues
+- Linters often have auto-fix for some issues: run the auto-fix first
+- For remaining issues that require reasoning: fix them manually
+
+**Example workflow**:
+```bash
+# 1. Edit files
+vim src/main.rs
+
+# 2. Run formatter
+cargo fmt
+
+# 3. Run linter with auto-fix first
+cargo clippy --fix
+
+# 4. Run linter again to catch remaining issues
+cargo clippy
+# Fix any remaining errors manually
+```
+
 ## README Standards
 
 Every project/README should answer within 2 minutes:
@@ -292,5 +337,7 @@ Keep README and module documentation in sync by extracting common explanations i
 | **Nesting** | Avoid more than 2-3 levels deep | When language idioms require it |
 | **Comments** | Explain why, not what | Security and performance require explanation of what |
 | **Extraction** | Break complex logic into small functions | When it hurts performance |
+| **Formatting** | Run formatter after every edit | N/A - Always run it |
+| **Linting** | Run linter after edits, fix all issues | Only skip if linter is very slow |
 
 **Remember**: Code is read far more often than it is written. Optimize for the reader.

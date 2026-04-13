@@ -393,3 +393,40 @@ code_here();
 ```
 
 Categories: `Security:`, `Performance:`, `Safety:`, `Optimization:`
+
+---
+
+## Formatter and Linter
+
+### Rust-Specific Tools
+
+**Formatter**: `rustfmt`
+```bash
+# Format specific files
+cargo fmt -- src/main.rs src/lib.rs
+
+# Or format the entire project
+cargo fmt
+```
+
+**Linter**: `clippy`
+```bash
+# Run clippy with auto-fix first
+cargo clippy --fix
+
+# Run clippy again to catch remaining issues
+cargo clippy
+
+# Treat warnings as errors
+cargo clippy -- -D warnings
+```
+
+### Workflow After Editing Rust Files
+
+1. **Edit**: Make your changes
+2. **Format**: `cargo fmt`
+3. **Auto-fix**: `cargo clippy --fix`
+4. **Check**: `cargo clippy` - fix any remaining issues manually
+5. **Commit**: Only commit when clippy reports clean
+
+**Note**: Always fix all clippy warnings. If a warning shouldn't exist, add an allow attribute with a comment explaining why, or configure it in `.clippy.toml` or `clippy.toml`.

@@ -372,3 +372,43 @@ code_here()
 ```
 
 Categories: `Security:`, `Performance:`, `Optimization:`
+
+---
+
+## Formatter and Linter
+
+### Python-Specific Tools
+
+**Formatter**: `black` (or `ruff format`)
+```bash
+# Format specific files with black
+black src/main.py src/utils.py
+
+# Or format the entire project
+black .
+
+# Using ruff (faster)
+ruff format src/main.py
+```
+
+**Linter**: `ruff` (or `pylint`, `flake8`)
+```bash
+# Run ruff check with auto-fix first
+ruff check --fix .
+
+# Run ruff again to catch remaining issues
+ruff check .
+
+# Treat warnings as errors
+ruff check --select ALL .
+```
+
+### Workflow After Editing Python Files
+
+1. **Edit**: Make your changes
+2. **Format**: `black <files>` or `ruff format <files>`
+3. **Auto-fix**: `ruff check --fix .`
+4. **Check**: `ruff check .` - fix any remaining issues manually
+5. **Commit**: Only commit when ruff reports clean
+
+**Note**: Always fix all linter warnings. If a warning shouldn't exist, disable it in `pyproject.toml` or setup.cfg with a comment explaining why.
