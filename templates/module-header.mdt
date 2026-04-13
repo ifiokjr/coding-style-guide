@@ -1,0 +1,42 @@
+# Module Header Template
+
+Use this template for module-level documentation at the top of files.
+
+## Usage
+
+```mdt
+{{> module-header 
+   title="My Module Name"
+   description="Brief description of what this module does"
+   language="rust|typescript|python"
+}}
+```
+
+## Parameters
+
+- `title` - The module title
+- `description` - One-line description of the module
+- `language` - Optional, for language-specific formatting
+
+## Output
+
+```rust
+//! My Module Name
+//!
+//! Brief description of what this module does.
+```
+
+```typescript
+/**
+ * @module my-module-name
+ *
+ * Brief description of what this module does.
+ */
+```
+
+```python
+"""My Module Name.
+
+Brief description of what this module does.
+"""
+```

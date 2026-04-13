@@ -1,0 +1,24 @@
+{{! Why Comment Template - Reusable explanation of why something exists }}
+
+{{! This template provides a consistent "Why This Exists" section that can be }}
+{{! reused across multiple documentation blocks. }}
+
+{{#if reason}}
+{{reason}}
+{{/if}}
+
+{{#if use_cases}}
+
+**Use Cases:**
+{{#each use_cases}}
+- {{this}}
+{{/each}}
+{{/if}}
+
+{{#if when_to_change}}
+
+**When to Change:**
+{{#each when_to_change}}
+- {{this}}
+{{/each}}
+{{/if}}

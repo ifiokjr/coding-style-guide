@@ -1,0 +1,37 @@
+{
+  "name": "@ifiokjr/coding-style-guide",
+  "version": "0.1.0",
+  "description": "A comprehensive coding style guide emphasizing readability, early returns, comprehensive documentation, and MDT templates for reusable documentation",
+  "main": "SKILL.md",
+  "files": [
+    "SKILL.md",
+    "languages/",
+    "templates/",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "keywords": [
+    "coding-style",
+    "style-guide",
+    "documentation",
+    "rust",
+    "typescript",
+    "python",
+    "mdt",
+    "templates",
+    "readability",
+    "early-returns"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ifiokjr/coding-style-guide.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ifiokjr/coding-style-guide/issues"
+  },
+  "homepage": "https://github.com/ifiokjr/coding-style-guide#readme"
+}
