@@ -1,3 +1,8 @@
+---
+name: "@ifi/coding-style-guide"
+description: "A code aesthetics and layout guide focused on how code looks - whitespace, comments, visual organization, and readability. Covers early returns, flat structure, and code simplicity."
+---
+
 # @ifi/coding-style-guide
 
 This skill defines a code aesthetics and layout guide focused on **how code looks** rather than what it does. It covers whitespace placement, comment positioning, code simplification patterns, and visual organization to maximize readability.
