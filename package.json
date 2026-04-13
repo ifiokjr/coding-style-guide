@@ -1,7 +1,7 @@
 {
-  "name": "@ifiokjr/coding-style-guide",
+  "name": "@ifi/coding-style-guide",
   "version": "0.1.0",
-  "description": "A comprehensive coding style guide emphasizing readability, early returns, comprehensive documentation, and MDT templates for reusable documentation",
+  "description": "A code aesthetics and layout guide focused on how code looks - whitespace, comments, visual organization, and readability. Not about which functions to use.",
   "main": "SKILL.md",
   "files": [
     "SKILL.md",
@@ -15,16 +15,18 @@
   "keywords": [
     "coding-style",
     "style-guide",
+    "code-aesthetics",
+    "readability",
+    "whitespace",
     "documentation",
     "rust",
     "typescript",
     "python",
-    "mdt",
-    "templates",
-    "readability",
-    "early-returns"
+    "dart",
+    "early-returns",
+    "visual-organization"
   ],
-  "author": "Your Name",
+  "author": "Ifiok Jr.",
   "license": "MIT",
   "repository": {
     "type": "git",

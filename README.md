@@ -1,32 +1,39 @@
-# Coding Style Guide
+# @ifi/coding-style-guide
 
-A comprehensive, living documentation of coding principles focused on readability, maintainability, and clear communication through code and documentation.
+A code aesthetics and layout guide focused on **how code looks**—whitespace placement, comment positioning, visual organization, and readability. This is not about which functions or language features to use; it's about making code visually simple and readable.
+
+> **Note**: This guide does not dictate which functions, methods, or language features to use. Those decisions belong to other skills (e.g., a Rust patterns skill or a Flutter architecture skill). This skill is purely about the *visual presentation* of code.
 
 ## 🎯 Philosophy
 
-Code is read far more often than it is written. This style guide prioritizes:
+**Simple code is better than complex code.**
 
-1. **Reader empathy**: Give the reader time to understand concepts
-2. **Early clarity**: State what's happening upfront, exit early from bad states  
-3. **Comprehensive documentation**: Every function, constant, and module deserves an explanation of *why* it exists
-4. **Composability**: Reuse documentation patterns across the codebase using MDT templates
+This is a general truth. Wherever possible, choose the simpler, neater solution—unless it hinders performance or security. Code is read far more often than it is written, so optimize for the reader.
+
+This style guide prioritizes:
+
+1. **Visual breathing room**: Code needs space to be understood
+2. **Early clarity**: State what's happening upfront, exit early from bad states
+3. **Flat over deep**: Indentation is a code smell; prefer early returns
+4. **Explanation of exceptions**: When you must add complexity for security or performance, explain why
 
 ## 📚 What's Included
 
 ### Core Principles
-- **Documentation-First**: Every item explains what, why, and how
-- **MDT (Markdown Template)**: Create reusable documentation patterns
-- **Early Returns**: Avoid deep nesting, fail fast
-- **Thoughtful Whitespace**: Group related code, add breathing room
-- **Security Comments**: Explain security considerations inline
+- **Simplicity First**: Choose the simpler solution unless security or performance require complexity
+- **Whitespace Is Semantics**: Blank lines separate concepts and give the reader breathing room
+- **Early Returns**: Guard clauses and flat structure over deep nesting
+- **Variables at the Top**: Declare state upfront when possible
+- **Security/Performance Comments**: Explain why when complexity is required
 
 ### Language-Specific Guides
 
-| Language | Focus Areas |
-|----------|-------------|
-| [Rust](./languages/RUST.md) | Ownership, typed-builder, lifetime management, error types |
-| [TypeScript](./languages/TYPESCRIPT.md) | Type safety, Zod validation, async patterns, strict types |
-| [Python](./languages/PYTHON.md) | Dataclasses, type hints, protocols, context managers |
+| Language | Focus |
+|----------|-------|
+| [Rust](./languages/RUST.md) | Whitespace, early returns, documentation aesthetics |
+| [TypeScript](./languages/TYPESCRIPT.md) | Whitespace, early returns, documentation aesthetics |
+| [Python](./languages/PYTHON.md) | Whitespace, early returns, documentation aesthetics |
+| [Dart](./languages/DART.md) | Whitespace, early returns, documentation aesthetics |
 
 ### Templates
 
@@ -40,18 +47,41 @@ MDT templates for reusable documentation:
 ### For New Projects
 
 1. **Read the main guide**: [SKILL.md](./SKILL.md)
-2. **Choose your language**: Rust, TypeScript, or Python
-3. **Copy templates**: Use MDT templates for consistent documentation
-4. **Set up formatters**: Always use automated formatters (rustfmt, prettier, black)
+2. **Choose your language**: Rust, TypeScript, Python, or Dart
+3. **Apply visual patterns**: Whitespace, early returns, flat structure
+4. **Set up formatters**: Always use automated formatters (rustfmt, prettier, black, dartfmt)
 
 ### For Existing Projects
 
-1. **Review the patterns**: Look at examples in your language guide
-2. **Apply incrementally**: Start with early returns and whitespace
-3. **Add documentation**: Document functions as you touch them
-4. **Create templates**: Extract common documentation into MDT templates
+1. **Review the visual patterns**: Look at examples in your language guide
+2. **Apply incrementally**: Start with whitespace and early returns
+3. **Document complexity**: Add comments explaining security/performance choices
+4. **Extract when nested**: Break deep nesting into smaller functions
 
 ## 📖 Key Patterns
+
+### Simplicity First
+
+```
+Given two implementations that achieve the same goal,
+choose the one that:
+- Has fewer lines
+- Has less nesting
+- Requires less mental effort to follow
+- Is easier to explain in words
+
+Exception: When security or performance requires complexity
+```
+
+When you must introduce complexity, **always add a comment explaining why**:
+
+```rust
+// Security: We must validate the signature before parsing
+// to prevent malformed input from causing panic or undefined behavior
+if !is_valid_signature(input) {
+    return Err(Error::InvalidSignature);
+}
+```
 
 ### Early Returns Example
 
@@ -81,55 +111,50 @@ if !user.has_permission("write") {
 // Happy path is now clear and at top level
 ```
 
-See more examples in [RUST.md](./languages/RUST.md), [TYPESCRIPT.md](./languages/TYPESCRIPT.md), [PYTHON.md](./languages/PYTHON.md).
-
-### Documentation Example
-
-**Every function needs a "Why":**
+### Whitespace Is Semantics
 
 ```rust
-/// Validates user credentials against the database.
-///
-/// # Why This Exists
-/// Authentication is a security-critical operation that must be
-/// consistent across all entry points (web, API, CLI). This function
-/// centralizes the validation logic and audit logging.
-///
-/// # Security Considerations
-/// - Never log passwords, even hashed ones
-/// - Rate limiting should be applied at the call site
-/// - Failed attempts are logged for security monitoring
-fn validate_credentials(credentials: &Credentials) -> Result<User, AuthError> {
-    // ...
+// Good: Three clear groups
+fn process_order(order: Order) {
+    // Group 1: Validation
+    if order.items.is_empty() {
+        return;
+    }
+
+    if !order.payment_method.is_valid() {
+        return;
+    }
+
+    // Group 2: Calculation
+    let subtotal = calculate_subtotal(&order.items);
+    let tax = calculate_tax(subtotal, order.region);
+
+    // Group 3: Persistence
+    save_order(order)?;
+    send_confirmation(order)?;
 }
 ```
 
 ## 🔧 Tool Integration
 
 This style guide **complements** automated formatters:
-- **Rust**: rustfmt
-- **TypeScript**: prettier
-- **Python**: black + isort
 
-Always defer to formatters for:
-- Indentation
-- Trailing commas
-- Spacing around operators
-- Line length
+- **Always use**: `rustfmt`, `prettier`, `black`, `dartfmt`
+- **This guide covers**: Blank line placement, grouping, early return patterns, comment positioning
+- **Formatters cover**: Indentation, trailing commas, spacing around operators, line length
 
-This guide covers:
-- Whitespace between logical groups
-- Early return patterns
-- Documentation structure
-- Code organization
+Never fight the formatter on mechanical details. This guide addresses aesthetic choices that formatters don't make.
 
-## 📝 Contributing
+## 📋 Summary
 
-This is a living document. As you discover new patterns:
-
-1. Add examples to the relevant language guide
-2. Create MDT templates for reusable patterns
-3. Update the main SKILL.md with new principles
+| Principle | Rule | Exception |
+|-----------|------|-----------|
+| **Simplicity** | Choose the simpler solution | When security or performance requires complexity |
+| **Whitespace** | Blank lines before control flow, between groups | Short, tightly-coupled operations |
+| **Variable placement** | Declare at top when possible | When value depends on prior computation |
+| **Nesting** | Avoid more than 2-3 levels deep | When language idioms require it |
+| **Comments** | Explain why, not what | Security and performance require explanation of what |
+| **Extraction** | Break complex logic into small functions | When it hurts performance |
 
 ## 📄 License
 
