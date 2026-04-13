@@ -35,13 +35,6 @@ This style guide prioritizes:
 | [Python](./languages/PYTHON.md) | Whitespace, early returns, documentation aesthetics |
 | [Dart](./languages/DART.md) | Whitespace, early returns, documentation aesthetics |
 
-### Templates
-
-MDT templates for reusable documentation:
-- [`module-header.mdt`](./templates/module-header.mdt) - Module-level documentation
-- [`function-doc.mdt`](./templates/function-doc.mdt) - Function documentation
-- [`why-comment.mdt`](./templates/why-comment.mdt) - Reusable "why" explanations
-
 ## 🚀 Quick Start
 
 ### For New Projects

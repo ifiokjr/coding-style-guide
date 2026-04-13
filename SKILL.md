@@ -235,7 +235,7 @@ Every function, class, and module should have a documentation block explaining:
 - **Purpose**: What does this do?
 - **Why**: Why does this exist? What problem does it solve?
 
-Use MDT-style templates or language-native documentation reuse mechanisms to keep explanations consistent.
+Use language-native documentation reuse mechanisms (like Dart macros or Rust doc macros) to keep explanations consistent.
 
 ```rust
 /// Validates a user session.
@@ -280,7 +280,7 @@ Every project/README should answer within 2 minutes:
 2. **Why should I use it?** - The value proposition  
 3. **What are the use cases?** - Practical scenarios
 
-Use MDT templates to keep README and module docs in sync.
+Keep README and module documentation in sync by extracting common explanations into reusable documentation patterns.
 
 ## Summary
 

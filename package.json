@@ -6,7 +6,6 @@
   "files": [
     "SKILL.md",
     "languages/",
-    "templates/",
     "README.md"
   ],
   "scripts": {
