@@ -7,7 +7,7 @@ description: "A code aesthetics and layout guide focused on how code looks - whi
 
 This skill defines a code aesthetics and layout guide focused on **how code looks** rather than what it does. It covers whitespace placement, comment positioning, code simplification patterns, and visual organization to maximize readability.
 
-> **Note**: This guide does not dictate which functions, methods, or language features to use. Those decisions belong to other skills (e.g., a Rust patterns skill or a Flutter architecture skill). This skill is purely about the *visual presentation* of code.
+> **Note**: This guide does not dictate which functions, methods, or language features to use. Those decisions belong to other skills (e.g., a Rust patterns skill or a Flutter architecture skill). This skill is purely about the _visual presentation_ of code.
 
 ## Philosophy
 
@@ -50,7 +50,7 @@ if !is_valid_signature(input) {
 ```typescript
 // Performance: Using a Map instead of an array for O(1) lookups
 // This matters because this function is called thousands of times per second
-const lookupMap = new Map(items.map(i => [i.id, i]));
+const lookupMap = new Map(items.map((i) => [i.id, i]));
 ```
 
 ### Whitespace Is Semantics
@@ -243,6 +243,7 @@ const results = new Array(estimatedSize);
 ### Documentation Blocks
 
 Every function, class, and module should have a documentation block explaining:
+
 - **Purpose**: What does this do?
 - **Why**: Why does this exist? What problem does it solve?
 
@@ -288,6 +289,7 @@ Never fight the formatter on mechanical details. This guide addresses aesthetic 
 **Rule**: After editing any code file or markdown file, always run the project's formatter.
 
 Different projects use different formatters:
+
 - **dprint** - Universal formatter for many languages
 - **prettier** - JavaScript, TypeScript, CSS, HTML, Markdown
 - **rustfmt** - Rust
@@ -304,15 +306,18 @@ Run the formatter on the specific files you edited. Auto-formatted code is essen
 - Or run on the whole project (if per-file isn't supported)
 
 **Warnings Are Errors**: Treat all linter warnings as errors.
+
 - If a warning shouldn't exist, remove it from the lint settings
 - Don't leave warnings in the codebase
 
 **Auto-fix What You Can**:
+
 - Formatters auto-correct their own formatting issues
 - Linters often have auto-fix for some issues: run the auto-fix first
 - For remaining issues that require reasoning: fix them manually
 
 **Example workflow**:
+
 ```bash
 # 1. Edit files
 vim src/main.rs
@@ -333,23 +338,23 @@ cargo clippy
 Every project/README should answer within 2 minutes:
 
 1. **Why does this exist?** - The problem it solves
-2. **Why should I use it?** - The value proposition  
+2. **Why should I use it?** - The value proposition
 3. **What are the use cases?** - Practical scenarios
 
 Keep README and module documentation in sync by extracting common explanations into reusable documentation patterns.
 
 ## Summary
 
-| Principle | Rule | Exception |
-|-----------|------|-----------|
-| **Simplicity** | Choose the simpler solution | When security or performance requires complexity |
-| **Whitespace** | Blank lines before control flow, between groups | Short, tightly-coupled operations |
-| **Sequential Control Flow** | Blank lines between sequential `if`, `for`, `match`, `switch` | Never cramped - code should never feel hurried |
-| **Variable placement** | Declare at top when possible | When value depends on prior computation |
-| **Nesting** | Avoid more than 2-3 levels deep | When language idioms require it |
-| **Comments** | Explain why, not what | Security and performance require explanation of what |
-| **Extraction** | Break complex logic into small functions | When it hurts performance |
-| **Formatting** | Run formatter after every edit | N/A - Always run it |
-| **Linting** | Run linter after edits, fix all issues | Only skip if linter is very slow |
+| Principle                   | Rule                                                          | Exception                                            |
+| --------------------------- | ------------------------------------------------------------- | ---------------------------------------------------- |
+| **Simplicity**              | Choose the simpler solution                                   | When security or performance requires complexity     |
+| **Whitespace**              | Blank lines before control flow, between groups               | Short, tightly-coupled operations                    |
+| **Sequential Control Flow** | Blank lines between sequential `if`, `for`, `match`, `switch` | Never cramped - code should never feel hurried       |
+| **Variable placement**      | Declare at top when possible                                  | When value depends on prior computation              |
+| **Nesting**                 | Avoid more than 2-3 levels deep                               | When language idioms require it                      |
+| **Comments**                | Explain why, not what                                         | Security and performance require explanation of what |
+| **Extraction**              | Break complex logic into small functions                      | When it hurts performance                            |
+| **Formatting**              | Run formatter after every edit                                | N/A - Always run it                                  |
+| **Linting**                 | Run linter after edits, fix all issues                        | Only skip if linter is very slow                     |
 
 **Remember**: Code is read far more often than it is written. Optimize for the reader.

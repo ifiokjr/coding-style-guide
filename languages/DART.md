@@ -310,6 +310,7 @@ void initializeServer() {
 ### When to Extract
 
 Extract code into functions when:
+
 - The logic is nested more than 2-3 levels deep
 - The function body exceeds ~30-40 lines
 - A logical unit can be named clearly
@@ -348,7 +349,7 @@ void checkStuff(Order order) {
 
 ### Doc Comment Structure
 
-```dart
+````dart
 /// Brief summary of what this does.
 ///
 /// ## Why This Exists
@@ -364,7 +365,7 @@ void checkStuff(Order order) {
 int myFunction(int x) {
   return x;
 }
-```
+````
 
 ### Using Documentation Macros
 
@@ -426,6 +427,7 @@ Categories: `Security:`, `Performance:`, `Optimization:`
 ### Dart/Flutter-Specific Tools
 
 **Formatter**: `dart format` (built-in)
+
 ```bash
 # Format specific files
 dart format lib/main.dart lib/utils.dart
@@ -438,6 +440,7 @@ flutter format lib/
 ```
 
 **Linter**: `dart analyze` (built-in)
+
 ```bash
 # Run analyzer (no auto-fix, but shows issues)
 dart analyze

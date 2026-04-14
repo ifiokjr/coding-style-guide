@@ -29,13 +29,13 @@ Blank lines are semantic. They separate concepts and give the reader time to pro
 const config = loadConfig();
 
 if (config.isValid()) {
-  processConfig(config);
+	processConfig(config);
 }
 
 // Bad - cramped
 const config = loadConfig();
 if (config.isValid()) {
-  processConfig(config);
+	processConfig(config);
 }
 ```
 
@@ -44,18 +44,18 @@ if (config.isValid()) {
 ```typescript
 // Good: Three distinct groups separated by blank lines
 function initializeApp(): App {
-  // Group 1: Configuration
-  const config = loadConfig();
-  validateConfig(config);
+	// Group 1: Configuration
+	const config = loadConfig();
+	validateConfig(config);
 
-  // Group 2: Resource initialization  
-  const db = connectDatabase(config.db);
-  const cache = initCache(config.cache);
+	// Group 2: Resource initialization
+	const db = connectDatabase(config.db);
+	const cache = initCache(config.cache);
 
-  // Group 3: Service construction
-  const services = new Services(db, cache);
+	// Group 3: Service construction
+	const services = new Services(db, cache);
 
-  return new App(services);
+	return new App(services);
 }
 ```
 
@@ -72,7 +72,8 @@ const query = `
 const result = executeQuery(query);
 
 // Bad - no breathing room
-const query = `SELECT * FROM users WHERE id = ${userId} AND status = '${status}'`;
+const query =
+	`SELECT * FROM users WHERE id = ${userId} AND status = '${status}'`;
 const result = executeQuery(query);
 ```
 
@@ -81,17 +82,17 @@ const result = executeQuery(query);
 ```typescript
 // Good
 function calculateTotal(items: Item[]): number {
-  const subtotal = items.reduce((sum, item) => sum + item.price, 0);
-  const tax = subtotal * 0.08;
+	const subtotal = items.reduce((sum, item) => sum + item.price, 0);
+	const tax = subtotal * 0.08;
 
-  return subtotal + tax;
+	return subtotal + tax;
 }
 
 // Bad - cramped return
 function calculateTotal(items: Item[]): number {
-  const subtotal = items.reduce((sum, item) => sum + item.price, 0);
-  const tax = subtotal * 0.08;
-  return subtotal + tax;
+	const subtotal = items.reduce((sum, item) => sum + item.price, 0);
+	const tax = subtotal * 0.08;
+	return subtotal + tax;
 }
 ```
 
@@ -102,21 +103,21 @@ Group related operations, then separate groups with blank lines:
 ```typescript
 // Good: Three clear groups
 function processOrder(order: Order): void {
-  // Validation group
-  if (order.items.length === 0) {
-    return;
-  }
-  if (order.total <= 0) {
-    return;
-  }
+	// Validation group
+	if (order.items.length === 0) {
+		return;
+	}
+	if (order.total <= 0) {
+		return;
+	}
 
-  // Calculation group
-  const discount = calculateDiscount(order);
-  const finalTotal = order.total - discount;
+	// Calculation group
+	const discount = calculateDiscount(order);
+	const finalTotal = order.total - discount;
 
-  // Persistence group
-  saveOrder(order);
-  sendConfirmation(order);
+	// Persistence group
+	saveOrder(order);
+	sendConfirmation(order);
 }
 ```
 
@@ -135,57 +136,57 @@ Handle error cases and edge conditions at the start, then proceed with the main 
 ```typescript
 // ❌ Avoid: The "arrow" anti-pattern
 async function processPayment(payment: Payment): Promise<Receipt> {
-  if (payment.amount > 0) {
-    if (payment.user) {
-      if (payment.user.isActive) {
-        if (payment.user.card) {
-          if (payment.user.card.isValid) {
-            // Finally the actual logic...
-            return await chargeCard(payment.user.card, payment.amount);
-          } else {
-            throw new Error("Invalid card");
-          }
-        } else {
-          throw new Error("No card");
-        }
-      } else {
-        throw new Error("Inactive user");
-      }
-    } else {
-      throw new Error("No user");
-    }
-  } else {
-    throw new Error("Invalid amount");
-  }
+	if (payment.amount > 0) {
+		if (payment.user) {
+			if (payment.user.isActive) {
+				if (payment.user.card) {
+					if (payment.user.card.isValid) {
+						// Finally the actual logic...
+						return await chargeCard(payment.user.card, payment.amount);
+					} else {
+						throw new Error("Invalid card");
+					}
+				} else {
+					throw new Error("No card");
+				}
+			} else {
+				throw new Error("Inactive user");
+			}
+		} else {
+			throw new Error("No user");
+		}
+	} else {
+		throw new Error("Invalid amount");
+	}
 }
 
 // ✅ Prefer: Guard clauses with early returns
 async function processPayment(payment: Payment): Promise<Receipt> {
-  // Guard clauses first - each on its own for clarity
-  if (payment.amount <= 0) {
-    throw new Error("Invalid amount");
-  }
+	// Guard clauses first - each on its own for clarity
+	if (payment.amount <= 0) {
+		throw new Error("Invalid amount");
+	}
 
-  const user = payment.user;
-  if (!user) {
-    throw new Error("No user");
-  }
+	const user = payment.user;
+	if (!user) {
+		throw new Error("No user");
+	}
 
-  if (!user.isActive) {
-    throw new Error("Inactive user");
-  }
+	if (!user.isActive) {
+		throw new Error("Inactive user");
+	}
 
-  const card = user.card;
-  if (!card) {
-    throw new Error("No card");
-  }
+	const card = user.card;
+	if (!card) {
+		throw new Error("No card");
+	}
 
-  if (!card.isValid) {
-    throw new Error("Invalid card");
-  }
+	if (!card.isValid) {
+		throw new Error("Invalid card");
+	}
 
-  // Main logic is now flat and obvious
-  return await chargeCard(card, payment.amount);
+	// Main logic is now flat and obvious
+	return await chargeCard(card, payment.amount);
 }
 ```
 
@@ -194,44 +195,44 @@ async function processPayment(payment: Payment): Promise<Receipt> {
 ```typescript
 // ❌ Avoid: Nested try/catch
 async function loadData(): Promise<Data> {
-  try {
-    const response = await fetch("/api/data");
-    try {
-      const json = await response.json();
-      try {
-        return validateData(json);
-      } catch (e) {
-        throw new Error("Invalid data format");
-      }
-    } catch (e) {
-      throw new Error("JSON parse error");
-    }
-  } catch (e) {
-    throw new Error("Fetch failed");
-  }
+	try {
+		const response = await fetch("/api/data");
+		try {
+			const json = await response.json();
+			try {
+				return validateData(json);
+			} catch (e) {
+				throw new Error("Invalid data format");
+			}
+		} catch (e) {
+			throw new Error("JSON parse error");
+		}
+	} catch (e) {
+		throw new Error("Fetch failed");
+	}
 }
 
 // ✅ Prefer: Sequential operations with early error handling
 async function loadData(): Promise<Data> {
-  let response: Response;
-  try {
-    response = await fetch("/api/data");
-  } catch (e) {
-    throw new Error("Fetch failed");
-  }
+	let response: Response;
+	try {
+		response = await fetch("/api/data");
+	} catch (e) {
+		throw new Error("Fetch failed");
+	}
 
-  let json: unknown;
-  try {
-    json = await response.json();
-  } catch (e) {
-    throw new Error("JSON parse error");
-  }
+	let json: unknown;
+	try {
+		json = await response.json();
+	} catch (e) {
+		throw new Error("JSON parse error");
+	}
 
-  try {
-    return validateData(json);
-  } catch (e) {
-    throw new Error("Invalid data format");
-  }
+	try {
+		return validateData(json);
+	} catch (e) {
+		throw new Error("Invalid data format");
+	}
 }
 ```
 
@@ -246,14 +247,14 @@ Declare variables at the start of functions when their values don't depend on in
 ```typescript
 // Good: State established upfront
 function handleRequest(req: Request): Response {
-  const userId = req.userId();
-  const path = req.path;
-  const method = req.method;
+	const userId = req.userId();
+	const path = req.path;
+	const method = req.method;
 
-  // Now use them...
-  console.info(`${method} ${path} ${userId}`);
+	// Now use them...
+	console.info(`${method} ${path} ${userId}`);
 
-  return processRequest(req);
+	return processRequest(req);
 }
 ```
 
@@ -264,14 +265,14 @@ When a variable depends on prior computation, declare it near where it's used:
 ```typescript
 // Good: Declaration follows computation
 function processData(input: string): Data {
-  const parsed = parseInput(input);
+	const parsed = parseInput(input);
 
-  // validated depends on parsed, so declared after
-  const validated = validateParsed(parsed);
+	// validated depends on parsed, so declared after
+	const validated = validateParsed(parsed);
 
-  const transformed = transformValidated(validated);
+	const transformed = transformValidated(validated);
 
-  return transformed;
+	return transformed;
 }
 ```
 
@@ -287,12 +288,12 @@ Place inline comments on their own line above the code they describe, not at the
 // Good
 // Security: Validate token before accessing protected resource
 if (!token.isValid()) {
-  throw new UnauthorizedError();
+	throw new UnauthorizedError();
 }
 
 // Bad - hard to read, easy to miss
 if (!token.isValid()) { // Security check
-  throw new UnauthorizedError();
+	throw new UnauthorizedError();
 }
 ```
 
@@ -302,20 +303,20 @@ Use comments to mark sections of related code:
 
 ```typescript
 function initializeServer(): void {
-  // === Configuration Loading ===
-  const config = loadConfig();
+	// === Configuration Loading ===
+	const config = loadConfig();
 
-  // === Middleware Setup ===
-  const auth = new AuthMiddleware(config.auth);
-  const logging = new LoggingMiddleware();
+	// === Middleware Setup ===
+	const auth = new AuthMiddleware(config.auth);
+	const logging = new LoggingMiddleware();
 
-  // === Route Registration ===
-  const router = new Router()
-    .use(auth)
-    .use(logging);
+	// === Route Registration ===
+	const router = new Router()
+		.use(auth)
+		.use(logging);
 
-  // === Server Start ===
-  server.bind(config.port).serve(router);
+	// === Server Start ===
+	server.bind(config.port).serve(router);
 }
 ```
 
@@ -326,6 +327,7 @@ function initializeServer(): void {
 ### When to Extract
 
 Extract code into functions when:
+
 - The logic is nested more than 2-3 levels deep
 - The function body exceeds ~30-40 lines
 - A logical unit can be named clearly
@@ -338,23 +340,23 @@ Name extracted functions for what they do, not how:
 ```typescript
 // Good
 function processOrder(order: Order): void {
-  validateOrder(order);
-  const price = calculatePrice(order);
-  saveToDatabase(order, price);
+	validateOrder(order);
+	const price = calculatePrice(order);
+	saveToDatabase(order, price);
 }
 
 function validateOrder(order: Order): void {
-  if (order.items.length === 0) {
-    throw new Error("Empty order");
-  }
-  if (order.total < 0) {
-    throw new Error("Negative total");
-  }
+	if (order.items.length === 0) {
+		throw new Error("Empty order");
+	}
+	if (order.total < 0) {
+		throw new Error("Negative total");
+	}
 }
 
 // Bad - vague names
 function checkStuff(order: Order): void {
-  // ...
+	// ...
 }
 ```
 
@@ -364,7 +366,7 @@ function checkStuff(order: Order): void {
 
 ### Doc Comment Structure
 
-```typescript
+````typescript
 /**
  * Brief summary of what this does.
  *
@@ -378,9 +380,9 @@ function checkStuff(order: Order): void {
  * ```
  */
 function myFunction(x: number): number {
-  return x;
+	return x;
 }
-```
+````
 
 ### Reusable Documentation with MDT
 
@@ -402,7 +404,7 @@ const cleanInput = DOMPurify.sanitize(userInput);
 // This reduces GC pressure when processing large datasets
 const results: Result[] = new Array(expectedCount);
 for (let i = 0; i < items.length; i++) {
-  results[i] = process(items[i]);
+	results[i] = process(items[i]);
 }
 
 // Security: Disable eval to prevent code injection
@@ -427,6 +429,7 @@ Categories: `Security:`, `Performance:`, `Optimization:`
 ### TypeScript/JavaScript-Specific Tools
 
 **Formatter**: `prettier` (or `dprint`)
+
 ```bash
 # Format specific files with prettier
 npx prettier --write src/main.ts src/utils.ts
@@ -439,6 +442,7 @@ npx dprint fmt src/main.ts
 ```
 
 **Linter**: `eslint`
+
 ```bash
 # Run eslint with auto-fix first
 npx eslint . --fix

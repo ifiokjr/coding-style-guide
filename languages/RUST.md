@@ -412,6 +412,7 @@ fn initialize_server() {
 ### When to Extract
 
 Extract code into functions when:
+
 - The logic is nested more than 2-3 levels deep
 - The function body exceeds ~30-40 lines
 - A logical unit can be named clearly
@@ -452,7 +453,7 @@ fn check_stuff(order: &Order) {
 
 ### Doc Comment Structure
 
-```rust
+````rust
 /// Brief summary of what this does.
 ///
 /// # Why This Exists
@@ -466,7 +467,7 @@ fn check_stuff(order: &Order) {
 fn my_function(x: i32) -> i32 {
     x
 }
-```
+````
 
 ### Using Documentation Macros
 
@@ -514,6 +515,7 @@ Categories: `Security:`, `Performance:`, `Safety:`, `Optimization:`
 ### Rust-Specific Tools
 
 **Formatter**: `rustfmt`
+
 ```bash
 # Format specific files
 cargo fmt -- src/main.rs src/lib.rs
@@ -523,6 +525,7 @@ cargo fmt
 ```
 
 **Linter**: `clippy`
+
 ```bash
 # Run clippy with auto-fix first
 cargo clippy --fix

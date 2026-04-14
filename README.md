@@ -2,7 +2,7 @@
 
 A code aesthetics and layout guide focused on **how code looks**—whitespace placement, comment positioning, visual organization, and readability. This is not about which functions or language features to use; it's about making code visually simple and readable.
 
-> **Note**: This guide does not dictate which functions, methods, or language features to use. Those decisions belong to other skills (e.g., a Rust patterns skill or a Flutter architecture skill). This skill is purely about the *visual presentation* of code.
+> **Note**: This guide does not dictate which functions, methods, or language features to use. Those decisions belong to other skills (e.g., a Rust patterns skill or a Flutter architecture skill). This skill is purely about the _visual presentation_ of code.
 
 ## 🎯 Philosophy
 
@@ -20,6 +20,7 @@ This style guide prioritizes:
 ## 📚 What's Included
 
 ### Core Principles
+
 - **Simplicity First**: Choose the simpler solution unless security or performance require complexity
 - **Whitespace Is Semantics**: Blank lines separate concepts and give the reader breathing room
 - **Early Returns**: Guard clauses and flat structure over deep nesting
@@ -28,12 +29,12 @@ This style guide prioritizes:
 
 ### Language-Specific Guides
 
-| Language | Focus |
-|----------|-------|
-| [Rust](./languages/RUST.md) | Whitespace, early returns, documentation aesthetics |
+| Language                                | Focus                                               |
+| --------------------------------------- | --------------------------------------------------- |
+| [Rust](./languages/RUST.md)             | Whitespace, early returns, documentation aesthetics |
 | [TypeScript](./languages/TYPESCRIPT.md) | Whitespace, early returns, documentation aesthetics |
-| [Python](./languages/PYTHON.md) | Whitespace, early returns, documentation aesthetics |
-| [Dart](./languages/DART.md) | Whitespace, early returns, documentation aesthetics |
+| [Python](./languages/PYTHON.md)         | Whitespace, early returns, documentation aesthetics |
+| [Dart](./languages/DART.md)             | Whitespace, early returns, documentation aesthetics |
 
 ## 🚀 Quick Start
 
@@ -79,6 +80,7 @@ if !is_valid_signature(input) {
 ### Early Returns Example
 
 **❌ Avoid:**
+
 ```rust
 if let Some(user) = request.user {
     if user.is_active {
@@ -90,6 +92,7 @@ if let Some(user) = request.user {
 ```
 
 **✅ Prefer:**
+
 ```rust
 let user = request.user.ok_or(Error::NoUser)?;
 
@@ -159,6 +162,7 @@ Run the formatter on the specific files you edited. Auto-formatted code is essen
 **Warnings Are Errors**: Treat all linter warnings as errors. If a warning shouldn't exist, remove it from the lint settings.
 
 **Workflow**:
+
 1. Edit files
 2. Run formatter
 3. Run linter with auto-fix first
@@ -166,16 +170,16 @@ Run the formatter on the specific files you edited. Auto-formatted code is essen
 
 ## 📋 Summary
 
-| Principle | Rule | Exception |
-|-----------|------|-----------|
-| **Simplicity** | Choose the simpler solution | When security or performance requires complexity |
-| **Whitespace** | Blank lines before control flow, between groups | Short, tightly-coupled operations |
-| **Variable placement** | Declare at top when possible | When value depends on prior computation |
-| **Nesting** | Avoid more than 2-3 levels deep | When language idioms require it |
-| **Comments** | Explain why, not what | Security and performance require explanation of what |
-| **Extraction** | Break complex logic into small functions | When it hurts performance |
-| **Formatting** | Run formatter after every edit | N/A - Always run it |
-| **Linting** | Run linter after edits, fix all issues | Only skip if linter is very slow |
+| Principle              | Rule                                            | Exception                                            |
+| ---------------------- | ----------------------------------------------- | ---------------------------------------------------- |
+| **Simplicity**         | Choose the simpler solution                     | When security or performance requires complexity     |
+| **Whitespace**         | Blank lines before control flow, between groups | Short, tightly-coupled operations                    |
+| **Variable placement** | Declare at top when possible                    | When value depends on prior computation              |
+| **Nesting**            | Avoid more than 2-3 levels deep                 | When language idioms require it                      |
+| **Comments**           | Explain why, not what                           | Security and performance require explanation of what |
+| **Extraction**         | Break complex logic into small functions        | When it hurts performance                            |
+| **Formatting**         | Run formatter after every edit                  | N/A - Always run it                                  |
+| **Linting**            | Run linter after edits, fix all issues          | Only skip if linter is very slow                     |
 
 ## 📄 License
 
@@ -183,4 +187,4 @@ MIT - See [LICENSE](./LICENSE) for details.
 
 ---
 
-*"Code is read far more often than it is written."* — Write for your future self and your teammates.
+_"Code is read far more often than it is written."_ — Write for your future self and your teammates.
