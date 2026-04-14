@@ -60,42 +60,48 @@ Blank lines are not just for decoration—they separate concepts and give the re
 **Where to place blank lines:**
 
 1. **Before control flow statements**: Add blank lines before `if`, `match`, `for`, `while`, `switch`, etc.
-2. **Between logical groups**: Group related operations, then separate groups with blank lines
-3. **After complex declarations**: Long variable declarations deserve breathing room
-4. **Before return statements**: Unless it's the very next line after a short operation
+2. **Between sequential control flow statements**: Sequential `if` statements, `for` loops, `match`/`switch` statements, etc. should each have a blank line before them. Code should never feel cramped or hurried.
+3. **Between logical groups**: Group related operations, then separate groups with blank lines
+4. **After complex declarations**: Long variable declarations deserve breathing room
+5. **Before return statements**: Unless it's the very next line after a short operation
 
 ```rust
-// Good: Whitespace separates concerns
-fn process_order(order: Order) -> Result<Receipt, Error> {
-    // Group 1: Validation
-    if order.items.is_empty() {
-        return Err(Error::EmptyOrder);
+// ❌ Avoid: Cramped sequential control flow - code feels hurried
+fn validate_input(input: &Input) -> Result<(), Error> {
+    if input.is_empty() {
+        return Err(Error::Empty);
+    }
+    if !input.is_valid_format() {
+        return Err(Error::InvalidFormat);
+    }
+    if input.len() > MAX_LENGTH {
+        return Err(Error::TooLong);
+    }
+    if contains_forbidden_chars(input) {
+        return Err(Error::ForbiddenChars);
+    }
+    Ok(())
+}
+
+// ✅ Prefer: Sequential if statements each get their own space
+fn validate_input(input: &Input) -> Result<(), Error> {
+    if input.is_empty() {
+        return Err(Error::Empty);
     }
 
-    if !order.payment_method.is_valid() {
-        return Err(Error::InvalidPayment);
+    if !input.is_valid_format() {
+        return Err(Error::InvalidFormat);
     }
 
-    // Group 2: Calculation
-    let subtotal = calculate_subtotal(&order.items);
-    let tax = calculate_tax(subtotal, order.region);
-    let total = subtotal + tax;
-
-    // Group 3: Payment processing
-    let payment_result = process_payment(order.payment_method, total)?;
-
-    if !payment_result.success {
-        return Err(Error::PaymentFailed);
+    if input.len() > MAX_LENGTH {
+        return Err(Error::TooLong);
     }
 
-    // Group 4: Finalization
-    let receipt = Receipt {
-        order_id: order.id,
-        total,
-        transaction_id: payment_result.id,
-    };
+    if contains_forbidden_chars(input) {
+        return Err(Error::ForbiddenChars);
+    }
 
-    Ok(receipt)
+    Ok(())
 }
 ```
 
@@ -156,7 +162,7 @@ fn handle_request(req: Request) -> Response {
     }
 }
 
-// ✅ Prefer: Early returns
+// ✅ Prefer: Early returns with blank lines between sequential if statements
 fn handle_request(req: Request) -> Response {
     let user = req.user.ok_or_else(|| Response::unauthorized())?;
 
@@ -338,6 +344,7 @@ Keep README and module documentation in sync by extracting common explanations i
 |-----------|------|-----------|
 | **Simplicity** | Choose the simpler solution | When security or performance requires complexity |
 | **Whitespace** | Blank lines before control flow, between groups | Short, tightly-coupled operations |
+| **Sequential Control Flow** | Blank lines between sequential `if`, `for`, `match`, `switch` | Never cramped - code should never feel hurried |
 | **Variable placement** | Declare at top when possible | When value depends on prior computation |
 | **Nesting** | Avoid more than 2-3 levels deep | When language idioms require it |
 | **Comments** | Explain why, not what | Security and performance require explanation of what |

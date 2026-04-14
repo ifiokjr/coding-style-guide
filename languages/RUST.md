@@ -120,9 +120,44 @@ fn process_order(order: Order) {
 }
 ```
 
----
+### Sequential Control Flow Statements
 
-## Early Returns and Flat Structure
+**Rule**: Sequential `if` statements, `for` loops, `match` statements, etc. should each have a blank line before them.
+
+**The Principle**: Code should never feel cramped or hurried. Each control flow statement deserves its own space.
+
+```rust
+// ❌ Avoid: Cramped sequential control flow
+fn validate_input(input: &str) -> Result<(), Error> {
+    if input.is_empty() {
+        return Err(Error::Empty);
+    }
+    if !is_valid_format(input) {
+        return Err(Error::InvalidFormat);
+    }
+    if input.len() > MAX_LENGTH {
+        return Err(Error::TooLong);
+    }
+    Ok(())
+}
+
+// ✅ Prefer: Each if statement has its own space
+fn validate_input(input: &str) -> Result<(), Error> {
+    if input.is_empty() {
+        return Err(Error::Empty);
+    }
+
+    if !is_valid_format(input) {
+        return Err(Error::InvalidFormat);
+    }
+
+    if input.len() > MAX_LENGTH {
+        return Err(Error::TooLong);
+    }
+
+    Ok(())
+}
+```
 
 ### The Orange Flag: Deep Nesting
 
