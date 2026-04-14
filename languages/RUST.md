@@ -5,12 +5,14 @@ This guide focuses on the visual presentation and layout of Rust code—whitespa
 ## Table of Contents
 
 1. [Whitespace and Visual Breathing Room](#whitespace-and-visual-breathing-room)
-2. [Early Returns and Flat Structure](#early-returns-and-flat-structure)
-3. [Variable Declaration and Grouping](#variable-declaration-and-grouping)
-4. [Comment Placement](#comment-placement)
-5. [Extraction Patterns](#extraction-patterns)
-6. [Documentation Aesthetics](#documentation-aesthetics)
-7. [Security and Performance Comments](#security-and-performance-comments)
+2. [Sequential Control Flow Statements](#sequential-control-flow-statements)
+3. [Early Returns and Flat Structure](#early-returns-and-flat-structure)
+4. [Variable Declaration and Grouping](#variable-declaration-and-grouping)
+5. [Comment Placement](#comment-placement)
+6. [Extraction Patterns](#extraction-patterns)
+7. [Documentation Aesthetics](#documentation-aesthetics)
+8. [Security and Performance Comments](#security-and-performance-comments)
+9. [Formatter and Linter](#formatter-and-linter)
 
 ---
 
@@ -240,6 +242,82 @@ fn load_config() -> Result<Config, Error> {
     let config = toml::from_str(&contents).map_err(Error::ParseError)?;
     
     Ok(config)
+}
+```
+
+### Using `let-else` for Early Returns
+
+`let-else` is a powerful construct for destructuring with an early return in the else branch. Like sequential if statements, each `let-else` should have a blank line before it.
+
+```rust
+// ❌ Avoid: Nested match or if-let
+fn process_user(user_id: UserId) -> Result<UserProfile, Error> {
+    let user = match db.get_user(user_id) {
+        Some(u) => u,
+        None => return Err(Error::UserNotFound),
+    };
+    
+    if let Some(profile) = db.get_profile(user.id) {
+        // Process profile
+        if let Some(settings) = db.get_settings(user.id) {
+            // Process settings
+            Ok(UserProfile { user, profile, settings })
+        } else {
+            Err(Error::SettingsNotFound)
+        }
+    } else {
+        Err(Error::ProfileNotFound)
+    }
+}
+
+// ✅ Prefer: let-else with blank lines between them
+fn process_user(user_id: UserId) -> Result<UserProfile, Error> {
+    let Some(user) = db.get_user(user_id) else {
+        return Err(Error::UserNotFound);
+    };
+
+    let Some(profile) = db.get_profile(user.id) else {
+        return Err(Error::ProfileNotFound);
+    };
+
+    let Some(settings) = db.get_settings(user.id) else {
+        return Err(Error::SettingsNotFound);
+    };
+
+    Ok(UserProfile { user, profile, settings })
+}
+```
+
+```rust
+// ❌ Avoid: Cramped let-else statements
+fn extract_config(data: &Value) -> Result<Config, Error> {
+    let Value::Object(map) = data else {
+        return Err(Error::NotAnObject);
+    };
+    let Some(name) = map.get("name") else {
+        return Err(Error::MissingName);
+    };
+    let Some(Value::String(name)) = name else {
+        return Err(Error::NameNotString);
+    };
+    Ok(Config::new(name))
+}
+
+// ✅ Prefer: Spacious let-else with blank lines
+fn extract_config(data: &Value) -> Result<Config, Error> {
+    let Value::Object(map) = data else {
+        return Err(Error::NotAnObject);
+    };
+
+    let Some(name) = map.get("name") else {
+        return Err(Error::MissingName);
+    };
+
+    let Some(Value::String(name)) = name else {
+        return Err(Error::NameNotString);
+    };
+
+    Ok(Config::new(name))
 }
 ```
 
