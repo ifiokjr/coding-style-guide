@@ -1,5 +1,5 @@
 ---
-name: "@ifi/coding-style-guide"
+name: "coding-style-guide"
 description: "A code aesthetics and layout guide focused on how code looks - whitespace, comments, visual organization, and readability. Covers early returns, flat structure, and code simplicity."
 ---
 
